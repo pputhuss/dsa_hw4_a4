@@ -220,7 +220,8 @@ int main()
             printf("%d\n", head->data);
         }
         else {
-            printf("\n");
+            return 0;
+            // printf("\n");
         }
 
         //printHead();
