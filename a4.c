@@ -30,6 +30,12 @@ void deleteAtVal (int val) {
 
     if (curr->data == val) //if the val is the 1st node just set the 2nd node as the head and free 1st node
     {
+        if (next_node == NULL)
+        {
+            head = NULL;
+            free(curr);
+            return;
+        }
         head = next_node;
         free(curr);
         return;
@@ -37,22 +43,22 @@ void deleteAtVal (int val) {
 
     else 
     {   
+        if (next_node->data == val) 
+        {
+            curr->next = next_node->next;
+            free(next_node);
+            return;
+        }
+
         while (next_node->data != val) 
         { //traverses through stops when its equal to val
             curr = curr->next;
             next_node = next_node->next;
 
-            //example for my understanding
-            //lets say val is 3
-            //curr is node before val 3
-            //next_node is on 3 
-            //now if is run
-            //curr next goes to the one after val 3
-            //free node with val 3
-            //return (idk if i need the return cuz the while i think does it for me)
-           
             if (next_node == NULL)
             {
+                head = NULL;
+                free(curr);
                 return;
             }
 
@@ -64,9 +70,7 @@ void deleteAtVal (int val) {
             }
         }
 
-    }
-
-    
+    }    
 }
 
 void switchToHead(int val) {
@@ -74,7 +78,7 @@ void switchToHead(int val) {
     
     if (head == NULL)
     {
-        printf("list is empty\n");
+        //printf("list is empty\n");
         return;
     }
 
@@ -83,11 +87,16 @@ void switchToHead(int val) {
 
     if (curr->data == val || curr_next == NULL) 
     {
-        printf("nothing to switch\n");
+        //printf("nothing to switch\n");
         return;
     }
 
-    
+    if (curr_next->data == val) {
+        curr->next = curr_next->next;
+        curr_next->next = head;
+        head = curr_next;
+        return;
+    }
 
     while (curr != NULL && curr_next->data != val)
     {
@@ -146,7 +155,7 @@ void printHead() {
         printf("%d -> ", temp->data);
         temp = temp->next;
     }
-    printf("NULL");
+    //printf("NULL");
 }
 
 // int repeatInt(int val) {
@@ -162,6 +171,7 @@ void printHead() {
 //     return 1;
 // }
 //i need another fucntion to determine when there is nothing in list so i can escape main func
+
 int main()
 {    
     head = NULL; //empty list
@@ -173,39 +183,47 @@ int main()
     
     while (1)
     {
-        printf("\nEnter command (open, close, switch) and value: ");
+        // printf("\nEnter command (open, close, switch) and value: ");
         scanf("%s %d", input, &val);
-        printf("string %s\n", input);
-        printf("number %d\n", val);
+        //printf("string %s\n", input);
+        //printf("number %d\n", val);
 
         if (strcmp(input, "open") == 0) 
         {   
             //if (repeatInt(val) == 1) {
             insertAtHead(val);
+            // printf("%d\n", head->data);
             //}
         }   
         else if (strcmp(input, "close") == 0)
         {
             //if (repeatInt(val) == 1) {
             deleteAtVal(val);
+            // printf("%d\n", head->data);
             //}
         }
         else if (strcmp(input, "switch") == 0 )
         {
             //if (repeatInt(val) == 1) {
             switchToHead(val);
+            // printf("%d\n", head->data);
             //}
         } 
         else 
         {
-            printf("unknown command\n");
+            // printf("unknown command\n");
+        }
+
+
+        if (head != NULL) {
+            printf("%d\n", head->data);
         }
 
         //printHead();
 
         if (head == NULL)
         {
-            printf("\nlist is empty \n");
+            // printf("\nlist is empty \n");
             break;
         }
     }
