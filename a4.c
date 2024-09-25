@@ -155,7 +155,7 @@ void printHead() {
         printf("%d -> ", temp->data);
         temp = temp->next;
     }
-    //printf("NULL");
+    printf("NULL\n");
 }
 
 // int repeatInt(int val) {
@@ -216,7 +216,11 @@ int main()
 
 
         if (head != NULL) {
+            //printHead();
             printf("%d\n", head->data);
+        }
+        else {
+            printf("\n");
         }
 
         //printHead();
